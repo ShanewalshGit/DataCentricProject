@@ -1,0 +1,38 @@
+
+<!--Add store link -->
+<!--<a href="/stores/add">Add Store</a><br>-->
+
+<title>Products</title>
+<h1>Products</h1>
+
+<% if (typeof error !== 'undefined') { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+<% } %>
+
+<table>
+    <tr>
+        <th>Product ID</th>
+        <th>Description</th>
+        <th>Store ID</th>
+        <th>Location</th>
+        <th>Price</th>
+        <th>Action</th>
+    </tr>
+    <% products.forEach((data) => { %>
+        <tr>
+            <!-- database data from mySQLDAO -->
+            <td><%= data.pid %></td>
+            <td><%= data.productdesc %></td>
+            <td><%= data.sid %></td>
+            <td><%= data.location %></td>
+            <td><%= data.Price %></td>
+            <!-- Delete Link -->
+            <td><a href="/products/delete/<%= data.pid %>">Delete</a></td>
+        </tr>
+    <% }); %>
+</table>
+
+<!-- Link back to index.js-->
+<a href="/">Home</a>

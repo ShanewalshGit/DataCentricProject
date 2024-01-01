@@ -1,0 +1,27 @@
+
+<form action="/stores/add" method="POST">
+  <h1>Add Store</h1>
+
+  <% if (typeof error !== 'undefined') { %>
+    <div class="alert alert-danger" role="alert">
+        <%= error %>
+    </div>
+  <% } %>
+
+  <div>
+    <label for="sid">Store ID:</label>
+    <input type="text" name="sid" required>
+  </div>
+  <div>
+    <label for="location">Location:</label>
+    <input type="text" name="location" required>
+  </div>
+  <div>
+    <label for="mgrid">Manager ID:</label>
+    <input type="text" name="mgrid" required>
+  </div>
+  <button type="submit" value="Add">Add Store</button>
+</form>
+
+<!-- Link back to index.js-->
+<a href="/">Home</a>

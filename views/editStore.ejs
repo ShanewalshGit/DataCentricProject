@@ -1,0 +1,25 @@
+
+
+
+<form action="/stores/edit/<%= store.sid %>" method="POST">
+    <h1>Edit Store</h1>
+
+    <% if (typeof error !== 'undefined') { %>
+        <div class="alert alert-danger" role="alert">
+            <%= error %>
+        </div>
+    <% } %>
+
+    <br>
+    
+    <label for="sid">Store ID</label>
+    <input type="text" name="sid" value="<%= store.sid %>" readonly><br>
+    <label for="location">Location</label>
+    <input type="text" name="location" value="<%= store.location %>" required minlength="1" title="Location must be at least 1 character"><br>
+    <label for="mgrid">Manager ID</label>
+    <input type="text" name="mgrid" value="<%= store.mgrid %>" pattern=".{4}" title="Manager ID should be a 4 characters"><br>
+    <input type="submit" value="Update">
+</form>
+
+<!-- Link back to index.js-->
+<a href="/">Home</a>

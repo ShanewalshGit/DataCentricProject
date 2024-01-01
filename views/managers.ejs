@@ -1,0 +1,26 @@
+
+<title>Managers (MongoDB)</title>
+<h1>Managers</h1>
+
+<!--Add manager link -->
+<a href="/managers/add">Add manager</a><br><br>
+
+<table>
+    <tr>
+        <th>Manager ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+    </tr>
+    <% managers.forEach((data) => { %>
+        <tr>
+            <!-- database data from MongoDB -->
+            <td><%= data._id %></td>
+            <td><%= data.name %></td>
+            <td><%= data.salary %></td>
+            <!-- Delete Link -->
+        </tr>
+    <% }); %>
+</table>
+
+<!-- Link back to index.js-->
+<a href="/">Home</a>

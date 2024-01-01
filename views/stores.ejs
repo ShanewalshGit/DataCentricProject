@@ -1,0 +1,27 @@
+
+<!--Add store link -->
+<title>Store</title>
+<h1>Stores</h1>
+
+<a href="/stores/add">Add Store</a><br><br>
+<table>
+    <tr>
+        <th>SID</th>
+        <th>Location</th>
+        <th>Manager ID</th>
+        <th>Action</th>
+    </tr>
+    <% stores.forEach((data) => { %>
+        <tr>
+            <!-- database data from mySQLDAO -->
+            <td><%= data.sid %></td>
+            <td><%= data.location %></td>
+            <td><%= data.mgrid %></td>
+            <!-- Update Link -->
+            <td><a href="/stores/edit/<%= data.sid %>">Update</a></td>
+        </tr>
+    <% }); %>
+</table>
+
+<!-- Link back to index.js-->
+<a href="/">Home</a>
