@@ -1,5 +1,7 @@
+// initialize express
 var express = require('express');
 var app = express();
+
 // import from mySQLDAO.js
 var mySQLDAO = require('./DAOs/mySQLDAO.js');
 
@@ -14,7 +16,7 @@ app.set('view engine', 'ejs');
 let bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res) { // default route
     res.render('index');
 });
 
@@ -90,25 +92,38 @@ app.get('/products/delete/:pid', function(req, res) {
 });
 
 // on submit of edit store form, update store
-app.post('/stores/edit/:sid', function (req, res) {
+app.post('/stores/edit/:sid', async function (req, res) {
     const sid = req.params.sid;
     const { location, mgrid } = req.body;
 
     // Check if Manager ID is 4 characters
     if (mgrid.length !== 4) {
         console.log("Error: Manager ID must be 4 characters");
-        res.redirect('/stores/edit/' + sid + '?error=' + encodeURIComponent("Manager ID must be 4 characters"));
+        res.redirect('/stores/edit/' + sid + '?error=' + encodeURIComponent("Manager ID must be 4 characters")); // redirect to edit store page with error message
         return;
     }
 
-    mySQLDAO.editStore(sid, location, mgrid)
-        .then(data => {
-            res.redirect('/stores');
-        })
-        .catch(error => {
-            console.log("Error: " + error);
-            res.redirect('/stores'); // redirect to stores page
-        })
+    // Check if Manager ID exists in MongoDB
+    const db = mongoDAO.findAll();
+    const manager = await db.then(data => {
+        return data.find(manager => manager._id === mgrid);
+    });
+
+    if (!manager) {
+        console.log("Error: Manager ID does not exist");
+        res.redirect('/stores/edit/' + sid + '?error=' + encodeURIComponent("Manager ID does not exist in MongoDB")); // redirect to edit store page with error message
+        return;
+    }
+    else {
+        mySQLDAO.editStore(sid, location, mgrid)
+            .then(data => {
+                res.redirect('/stores');
+            })
+            .catch(error => {
+                console.log("Error: " + error);
+                res.redirect('/stores'); // redirect to stores page
+            })
+        }
 });
 
 // send to add store page
@@ -178,6 +193,7 @@ app.post('/managers/add', function(req, res) {
         return;
     }
 
+    // Check if Manager ID exists in MongoDB
     mongoDAO.addManager(req.body._id, req.body.name, req.body.salary)
         .then(data => {
             res.redirect('/managers');
@@ -189,6 +205,6 @@ app.post('/managers/add', function(req, res) {
 });
 
 
-app.listen(3000, function() {
+app.listen(3000, function() { // listen on port 3000
     console.log('Example app listening on port 3000!');
 });

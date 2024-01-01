@@ -1,9 +1,8 @@
+// Initialize the database connection
 var express = require('express');
 var app = express();
 var pmysql = require('promise-mysql'); // promise-mysql module
 var pool; // global pool variable
-
-var mongoDAO = require('./MongoDAO.js');
 
 // create a pool connection
 pmysql.createPool({ // createPool() method to create a pool of connections
@@ -35,6 +34,7 @@ function getProducts() {
     })
 }
 
+// Check if product is in any store
 function isProductInAnyStore(pid) {
     return new Promise((resolve, reject) => {
         // mysql code to get product
@@ -78,6 +78,9 @@ function getStores() {
     })
 }
 
+// If the stores table is clogged up, here's an example command for you to paste into the SQL Database to delete a store
+//DELETE FROM `store` WHERE `store`.`sid` = 'STORE1';
+
 // function for grabbing a store id
 function getStoreById(sid) {
     return new Promise((resolve, reject) => {
@@ -91,6 +94,7 @@ function getStoreById(sid) {
     })
 }
 
+// function for grabbing a store by manager id
 function getStoreByManagerId(mgrid) {
     return new Promise((resolve, reject) => {
         pool.query("select * from store where mgrid = ?", [mgrid])
@@ -120,6 +124,7 @@ function editStore(sid, location, mgrid) {
         })
 }
 
+// function for adding a store, used in addStore route
 function addStore(sid, location, mgrid) {
     return new Promise((resolve, reject) => {
         // mysql code to add store

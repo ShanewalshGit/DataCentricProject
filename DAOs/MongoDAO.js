@@ -1,3 +1,4 @@
+// Initialize express
 var express = require('express');
 var app = express();
 
@@ -28,6 +29,7 @@ var findAll = function () {
     })
 }
 
+// send back mongo data by id
 var findOne = function (id) {
     return new Promise((resolve, reject) => {
         var cursor = coll.find({ _id: id })
