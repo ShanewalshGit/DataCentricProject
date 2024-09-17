@@ -1,6 +1,6 @@
 # DataCentricProject
 
-This project is a **data-centric web application** built using JavaScript and MongoDB. It demonstrates database management and interaction through a web interface.
+This project was built for the **data-centric web application** module in ATU. built using JavaScript and MongoDB. It demonstrates database management and interaction through a web interface.
 
 ### Features:
 - Data access objects (DAOs) for handling MongoDB operations.
